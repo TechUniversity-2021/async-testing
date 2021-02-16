@@ -1,21 +1,18 @@
-const promiseFs = require("../promisify-file-read/promisifyFileRead");
+const promiseFs = require('../promisify-file-read/promisifyFileRead');
 
-function fileOps(path){
-    return promiseFs.fread(path)
-    .then(function(path){
-        return promiseFs.fread(path)
+function fileOps(path) {
+  return promiseFs.fread(path)
+    .then(function (path) {
+      return promiseFs.fread(path);
     })
-    .then(function(path){
-        return promiseFs.fread(path)
+    .then(function (path) {
+      return promiseFs.fread(path);
     })
-    .then(function(data){
-        return data;
-    })
+    .then(function (data) {
+      return data;
+    });
 }
 
-
-module.exports  = {
-    fileOps
-}
-
-
+module.exports = {
+  fileOps,
+};
