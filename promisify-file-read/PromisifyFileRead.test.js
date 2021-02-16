@@ -1,16 +1,16 @@
 const promisifyFs = require("./PromisifyFileRead");
 const fs = require('fs');
 
-test("Should resolve a promise to '21,34,43,57,'Anukriti'' ", () => {
+test("Should resolve a promise to '21,34,43,57,'Anukriti'' ", function () {
     return expect(promisifyFs("./promisify-file-read/testFile.txt")).resolves.toBe(
       '21,34,43,57,"Anukriti"');
     //done();
 });
 
 
-test('Unit testing', (done) => {
-  jest.spyOn(fs, 'readFile').mockImplementation((file, option, callback) => callback(null, '21,34,43,57,"Anukriti"'));
-  promisifyFs('randomFile').then(text => {
+test('Unit testing', function(done){
+  jest.spyOn(fs, 'readFile').mockImplementation(function(file, option, callback){callback(null, '21,34,43,57,"Anukriti"')});
+  promisifyFs('randomFile').then(function (text) {
       expect(text).toBe('21,34,43,57,"Anukriti"');
       done();
   });
