@@ -1,1 +1,1 @@
-./file/two.txt
+../file/two.txt

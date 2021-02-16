@@ -1,1 +1,1 @@
-./file/three.txt
+../file/three.txt
