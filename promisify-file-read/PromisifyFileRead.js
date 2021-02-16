@@ -18,4 +18,8 @@ function getText(fileName) {
 
 //getText("./TestFile.txt").then(console.log).catch(console.log);
 
-module.exports= getText;
+//module.exports= getText;
+module.exports= {
+    getText
+};
+//module.exports is an object
