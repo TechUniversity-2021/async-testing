@@ -1,21 +1,22 @@
 {
-  "name": "examples",
-  "version": "1.0.0",
-  "description": "",
-  "main": "promisifyFs.js",
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
-  "scripts": {
-    "test": "jest"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "jest": "^26.6.3"
-  }
+    "name": "examples",
+    "version": "1.0.0",
+    "description": "",
+    "main": "promisifyFs.js",
+    "jest": {
+        "testEnvironment": "node",
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ]
+    },
+    "scripts": {
+        "test": "jest"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^7.20.0",
+        "jest": "^26.6.3"
+    }
 }
