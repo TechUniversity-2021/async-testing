@@ -23,4 +23,4 @@ const readFile = (filePath) => {
 
 // readFile('abc.txt').then(console.log)
 
-module.exports = readFile;
+module.exports = {readFile};
