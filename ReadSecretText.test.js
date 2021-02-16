@@ -1,18 +1,16 @@
-const promsifyRead = require("./ReadSecretText");
-const fs = require('fs');
+const secretRead = require("./ReadSecretText");
+const promisifyfs = require('./promisifyFs')
 
 test('promise should resolved with This is a secret', () => {
-    return expect(promsifyRead.getSecret("./file/one.txt")).resolves.toBe('This is a secret');
+    return expect(secretRead.getSecret("./file/one.txt")).resolves.toBe('This is a secret');
   });
 
   test('promise should reject ', () => {
-        return expect(promsifyRead.getSecret("./file/xyz.txt")).rejects.toBe("error");
+        return expect(secretRead.getSecret("./file/xyz.txt")).rejects.toBe("error");
   });
 
   test('promise should resolve ', () => {
-    jest.spyOn(promsifyRead, "getSecret")
+    jest.spyOn(promisifyfs, "readFile")
       .mockResolvedValue('resolved')
-      expect(promsifyRead.getSecret("./file/one.txt")).resolves.toBe('resolved');
-
+      expect(secretRead.getSecret("./file/one.txt")).resolves.toBe('resolved');
 });
-
