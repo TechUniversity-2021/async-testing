@@ -1,5 +1,5 @@
 const secretRead = require("./ReadSecretText");
-const promisifyfs = require('./promisifyFs')
+const promisifyfs = require('../promisify/promisifyFs')
 
 test('promise should resolved with This is a secret', () => {
     return expect(secretRead.getSecret("./file/one.txt")).resolves.toBe('This is a secret');

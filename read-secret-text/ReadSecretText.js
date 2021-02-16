@@ -1,5 +1,5 @@
 
-const promisifyfs = require('./promisifyFs')
+const promisifyfs = require('../promisify/promisifyFs')
 
 function getSecret(path) {
      
