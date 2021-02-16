@@ -2,6 +2,7 @@ const promisify= require("./promisify-file-read/PromisifyFileRead");
 
 function executePromises(filePath)
 {
+    //returns promise
     return promisify.getText(filePath)   
     .then(function (data){
         return promisify.getText(data);    
