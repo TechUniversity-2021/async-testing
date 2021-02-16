@@ -1,4 +1,4 @@
-const promisifyFs = require("./PromisifyFileRead");
+const {promisifyFs} = require("./PromisifyFileRead");
 const fs = require("fs");
 
 test("Should resolve a promise to '21,34,43,57,'Anukriti'' ", function () {

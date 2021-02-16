@@ -23,4 +23,6 @@ function promisifyFs(filePath){
 //     console.log(data);
 // })
 
-module.exports=promisifyFs;
+module.exports={
+    promisifyFs
+};
