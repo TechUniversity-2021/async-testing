@@ -1,0 +1,1 @@
+final/get-secret/files/file2.txt
