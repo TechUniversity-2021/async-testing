@@ -1,32 +1,30 @@
-const promisifyFs= require("./PromisifyFileRead");
-const fs= require('fs');
+const { getText } = require("./PromisifyFileRead");
+const fs = require('fs');
+//const { doesNotMatch } = require("assert");
 
 //xtest to skip test
-test('should resolve with value 12345 ', ()=> {
+test('should resolve with value 12345 ', () => {
+    //dont want to read file here
+    //mocking a callback, not a promise
     jest.spyOn(fs, 'readFile')
-    .mockImplementation(function(path, options, callback) {
-        callback(null, '12345');
-    })
-    //return(expect(getText('./promisify-file-read/TestFile.txt')).resolves.toBe('12345'))
-    //return expect(promisifyFs.getText('./promisify-file-read/TestFile.txt')).resolves.toBe('12345')
-    return expect(promisifyFs.getText('random file')).resolves.toBe('12345')
-    //return expect(promisifyFs.getText()).resolves.toBe('12345');
-    // promisifyFs.getText().then(function(data){
-    //     expect(data).toBe('hey');
-    // });
+        .mockImplementation(function (path, options, callback) {
+            callback(null, '12345');
+        })
+    //if the callback is called, we can assume it has been mocked
+
+    // getText().then(function(data) {
+    //     expect(data).toBe('12345');
+    //     done();
+    // })
+    expect(getText('random file')).resolves.toBe('12345')
+    //return expect(getText('random file')).resolves.toBe('12345')
+    //return acts like done
 
     //why this will fail without done, but line 10 doesnt
 
 });
 
-test('should resolve with value 12345 ', ()=> {
-    jest.spyOn(fs, 'readFile')
-    .mockImplementation(function(path, options, callback) {
-        callback(new Error('this is an error'), null);
-    })
-    //return(expect(getText('./promisify-file-read/TestFile.txt')).resolves.toBe('12345'))
-    return expect(promisifyFs.getText('xyz file')).rejects.toEqual(new Error('this is an error'))
 
 
-});
+
 

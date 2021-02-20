@@ -1,10 +1,28 @@
-const {executePromises}=require("./SequenceFileRead");
-const fileOps=require("./promisify-file-read/PromisifyFileRead")
+const {seqFileRead}=require("./SequenceFileRead");
+const fileOps= require("./promisifyFs");
 const { readMultipleFiles } = require("./AsyncSequenceFileRead");
 
-test("Promise resolves to Secret Message ", function()
+//5 to 18 integration testing, need to write unit testing for these
+xtest("Promise resolves to Secret Message ", function()
 {
-    return expect(executePromises('./files/one.txt')).resolves.toBe("Secret Message");
+    //return expect(seqFileRead('./files/one.txt')).resolves.toBe("Secret Message");
+    expect(seqFileRead('./files/one.txt')).resolves.toBe("Secret Message");
+})
+
+xtest("Promise rejects ", function()
+{
+    return expect(seqFileRead('./files/hi/one.txt')).rejects.toEqual(new Error("An error occured"));
+    //do try catch and match exact code/message
+    //if mocking can do as is
+    //pass done, call seq file, prov name, catch error in catch/ 2nd arg of then, and compare error.message/error.code
+    //
+})
+
+xtest("Promise rejects ",function(done){
+    seqFileRead('./files/hi/one.txt').catch(function (error){
+        expect(error.code).toBe("ENOENT");
+        done();
+    })
 })
 
 // test("Promise rejects", function(done)
@@ -18,49 +36,65 @@ test("Promise resolves to Secret Message ", function()
 //     //return expect(result.executePromises('./files/hi/one.txt')).rejects.toBe(new Error("An error has occured"));
 // })
 
-test("Promise rejects ",function(done){
-    executePromises('./files/hi/one.txt').catch(function (error){
-        expect(error.code).toBe("ENOENT");
-        done();
-    })
-})
 
 xtest("Unit test for promise resolves ",function(done){
 
-    jest.spyOn(fileOps,"getText").mockResolvedValue("RandomString");
-    executePromises('./files/one.txt').then(function(data){
+    jest.spyOn(fileOps,"readFile").mockResolvedValue("RandomString");
+    seqFileRead('./files/one.txt').then(function(data){
         expect(data).toBe("RandomString");
         done();
     })
 })
 
-test("Unit test for promise resolves ",function(done){
-    const readFileSpy=jest.spyOn(fileOps, "getText");
-    readFileSpy.mockResolvedValueOnce('abc')
-    readFileSpy.mockResolvedValueOnce('def')
-    readFileSpy.mockResolvedValueOnce('ghi')
 
-    executePromises("dummyfile.txt").then(function(data) {
-    expect(readFileSpy).toHaveBeenNthCalledWith(1, "dummyfile.txt")
-    expect(readFileSpy).toHaveBeenNthCalledWith(2, "abc")
-    expect(readFileSpy).toHaveBeenNthCalledWith(3, "def")
-    expect(data).toBe("ghi")
-    done();
+xtest("Unit test for promise resolves ",function(){
 
-    })
-    //expect(readFileSpy).toHaveBeenNthCallWith(2, 'ghi')
+    jest.spyOn(fileOps,"readFile").mockResolvedValue("RandomString");
+    expect(seqFileRead('./files/one.txt')).resolves.toBe("RandomString");
+});
 
-    //return expect(executePromises('dummyfile.txt')).resolves.toBe('ghi')
+// xtest("Unit test for promise resolves ",function(done){
+//     const readFileSpy=jest.spyOn(fileOps, "readFile");
+//     readFileSpy.mockResolvedValueOnce('abc')
+//     readFileSpy.mockResolvedValueOnce('def')
+//     readFileSpy.mockResolvedValueOnce('ghi')
+
+//     seqFileRead("dummyfile.txt").then(function(data) {
+//     expect(readFileSpy).toHaveBeenNthCalledWith(1, "dummyfile.txt")
+//     expect(readFileSpy).toHaveBeenNthCalledWith(2, "abc")
+//     expect(readFileSpy).toHaveBeenNthCalledWith(3, "def")
+//     expect(data).toBe("ghi")
+//     done();
+
+//     })
+//     //expect(readFileSpy).toHaveBeenNthCallWith(2, 'ghi')
+
+//     //return expect(executePromises('dummyfile.txt')).resolves.toBe('ghi')
 
 
+// });
+
+xtest("Unit test for promise resolves", (done)=> {
+    const readFileSpy=jest.spyOn(fileOps, 'readFile');
+    readFileSpy.mockResolvedValueOnce("abc")
+                .mockResolvedValueOnce("def")
+                .mockResolvedValueOnce("ghi")
+
+    seqFileRead("dummy.txt").then(function(data) {
+        expect(readFileSpy).toHaveBeenNthCalledWith(1, "dummy.txt")
+        expect(readFileSpy).toHaveBeenNthCalledWith(2, "abc")
+        expect(readFileSpy).toHaveBeenNthCalledWith(3, "def")
+        expect(data).toBe("ghi")
+        done();
+    });
 
 });
 
 test("Unit test for promise resolves ", async function(){
-    const readFileSpy=jest.spyOn(fileOps, "getText");
-    readFileSpy.mockResolvedValueOnce('abc');
-    readFileSpy.mockResolvedValueOnce('def');
-    readFileSpy.mockResolvedValueOnce('ghi');
+    const readFileSpy=jest.spyOn(fileOps, "readFile");
+    readFileSpy.mockResolvedValueOnce("abc");
+    readFileSpy.mockResolvedValueOnce("def");
+    readFileSpy.mockResolvedValueOnce("ghi");
 
 
     const result = await readMultipleFiles("dummyfile.txt");

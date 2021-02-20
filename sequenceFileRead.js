@@ -1,26 +1,4 @@
-const promisify= require("./promisify-file-read/PromisifyFileRead");
-
-function executePromises(filePath)
-{
-    //returns promise
-    return promisify.getText(filePath)   
-    .then(function (data){
-        return promisify.getText(data);    
-    })
-    .then(function (data){
-        return promisify.getText(data);    
-    })
-    .then(function (data) {
-        return data    
-    })
-    .catch(function (error){
-        throw error;
-    });
-}
-
-module.exports = {executePromises} ;
-
-
+//-------------
 // const executePromises = (pathname) => {
 //     return first(pathname).then(second).then(third).then((message) => {
 //         return message;
@@ -35,23 +13,47 @@ module.exports = {executePromises} ;
 // module.exports={executePromises};
 // -------
 
-// const {promisifyFs}  = require("../promisify-file-read/PromisifyFileRead");
+const fileOps= require("./promisifyFs");
 
-// function seqFileRead(filePath) {
-//    return promisifyFs(filePath)   //./files/one.txt   returns ./files/two.txt
-//     .then(function (data){
-//         return promisifyFs(data);    //./files/two.txt   returns ./files/three.txt
+function seqFileRead(filePath) {
+    //have to return this
+   return fileOps.readFile(filePath)   
+    .then(function (data){
+        return fileOps.readFile(data);    
+    })
+    .then(function (data){
+        return fileOps.readFile(data);   
+    })
+    .then(function (data) {
+        //console.log(typeof data)
+        return data   
+    })
+    .catch(function (error){
+        //throw new Error(("An error occured"));
+        throw error;
+        //if you return will treat like output of promise
+        //return new Error("An error occured");
+    });
+}
+//seqFileRead("./files/one.txt");
+
+module.exports ={seqFileRead};
+
+// const fileOps= require("./promisifyFs");
+
+// function seqFileRead(filepath) {
+//      fileOps.readFile(filepath).then(function (data) {
+//          fileOps.readFile(data)
+//     }).then(function(data) {
+//          fileOps.readFile(data)
+//     }).then(function(data) {
+//         console.log(data);
+//         return data;
 //     })
-//     .then(function (data){
-//         return promisifyFs(data);    //./files/three.txt   returns This is your secret!
-//     })
-//     .then(function (data) {
-//         return data    //This is your secret
-//     })
-//     .catch(function (error){
+//     .catch(function(error) {
 //         throw error;
-//         //return new Error("An error occured");
 //     });
 // }
 
-// module.exports ={ seqFileRead };
+// seqFileRead("./files/one.txt");
+// //console.log(data);

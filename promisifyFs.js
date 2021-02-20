@@ -12,15 +12,19 @@ const fs = require('fs');
 const readFile = (filePath) => {
     return new Promise((resolve, reject) => {
         fs.readFile(filePath, 'utf-8' , (err, data) => {
-            console.log(err, data);
+            //console.log(err, data);
             if (err) {
                 reject(err);
             }
+            //console.log(data);
             resolve(data);
         })
     });
 }
 
-// readFile('abc.txt').then(console.log)
+// readFile("./files/one.txt");
+// console.log(readFile);
 
-module.exports = readFile;
+//readFile('abc.txt').then(console.log)
+
+module.exports = {readFile};

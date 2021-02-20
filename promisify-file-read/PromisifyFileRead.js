@@ -22,4 +22,5 @@ function getText(fileName) {
 module.exports= {
     getText
 };
-//module.exports is an object
+//console.log(typeof module.exports)
+//module.exports is an object, should export an object
